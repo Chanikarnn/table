@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Form & Table</title>
     <style>
         table {
             width:75%;
@@ -34,25 +34,25 @@
 <body>
     <form>
         <fieldset>
-            <!-- <legend>Personal information:</legend> -->
+            <legend>Student Data:</legend>
             Student ID<br>
-            <input type="text" v-model="student.ID" name="StudentID">
+            <input type="number" name="code" id="code" min="0" max="10000000000">
             <br>
             Name<br>
-            <input type="text" v-model="student.Name" name="firstname">
+            <input type="text" name="name" id="name" >
             <br>
              Last name <br>
-            <input type="text" v-model="student.Lastname" name="lastname">
+             <input type="text" name="lastname" id="lastname" >
             <br>
              E-mail<br>
-            <input type="text" v-model="student.Email" name="E-mail">
+             <input type="email" name="email" id="email" >
             <br>
              GPA :<br>
-            <input type="text" v-model="student.GPA" name="GPA">
+             <input type="number" name="gpa" id="gpa" min="0" max="4" step="0.01">
            
            <br><br>
            <input type="submit" value="Submit">
-      </fieldset>
+      
      </form>
      <br><br>
      <table id="t01">
@@ -62,30 +62,59 @@
           <th>Last name</th>
           <th> E-mail</th>
           <th>GPA</th>
+          <th></th>
         </tr>
-        <tr>
-          <td>aaa</td>
-          <td>aaa</td>		
-          <td>aaa</td>
-          <td>aaa</td>
-          <td>aaa</td>
-
-        </tr>
-        <tr>
-          <td>aaa</td>
-          <td>aaa</td>		
-          <td>aaa</td>
-          <td>aaa</td>
-          <td>aaa</td>
-        </tr>
-        <tr>
-          <td>aaa</td>
-          <td>aaa</td>		
-          <td>aaa</td>
-          <td>aaa</td>
-          <td>aaa</td>
-        </tr>
+        <tbody></tbody>
+      
       </table>
+    </fieldset>
+
+
+
+
+    <script>
+      const formEl = document.querySelector("form");
+      const tbodyEl = document.querySelector("tbody");
+      const tableEl = document.querySelector("table");
+      function onAddWebsite(e) {
+        e.preventDefault();
+		var FormData = []; 
+		const code = document.getElementById("code").value;
+		FormData.push(code);
+        const name = document.getElementById("name").value;
+		FormData.push(name);
+		const lastname = document.getElementById("lastname").value;
+		FormData.push(lastname);
+		const email = document.getElementById("email").value;
+		FormData.push(email);
+		const gpa = document.getElementById("gpa").value;
+		FormData.push(gpa);
+		
+		
+        tbodyEl.innerHTML += `
+            <tr>
+			    <td>${FormData[0]}</td>
+				<td>${FormData[1]}</td>
+				<td>${FormData[2]}</td>
+				<td>${FormData[3]}</td>
+				<td>${FormData[4]}</td>
+                <td><button class="deleteBtn">Delete</button></td>
+            </tr>
+        `;
+      }
+
+      function onDeleteRow(e) {
+        if (!e.target.classList.contains("deleteBtn")) {
+          return;
+        }
+
+        const btn = e.target;
+        btn.closest("tr").remove();
+      }
+
+      formEl.addEventListener("submit", onAddWebsite);
+      tableEl.addEventListener("click", onDeleteRow);
+    </script>
     
 </body>
 </html>
